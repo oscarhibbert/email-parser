@@ -1,0 +1,4 @@
+*.env
+*.vscode
+practice_materials/
+__pycache__/
