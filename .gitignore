@@ -1,5 +1,4 @@
 *.env
 *.vscode
-newsletters/
 practice_materials/
 __pycache__/
