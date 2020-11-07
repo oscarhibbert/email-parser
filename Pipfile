@@ -14,6 +14,7 @@ mail-parser = "*"
 flanker = "*"
 schedule = "*"
 python-dotenv = "*"
+webdriver-manager = "*"
 
 [requires]
 python_version = "3.7"
