@@ -19,6 +19,14 @@ imap_label = os.environ.get('IMAP_LABEL')
 
 newslet_scrape_path = os.environ.get('NEWSLET_SCRAPE_PATH')
 
+if not 'file:///' in newslet_scrape_path:
+    raise Exception("'file:///' is missing from the start of the " +
+                    "scraping path. Please update it in your env. file.")
+
+if newslet_scrape_path[-1] != '/':
+    raise Exception("The '/' character is missing from the end of the " +
+                    "scraping path. Please update it in your env. file.")
+
 # Import mailmonitor module
 import emailmonitor.emailmonitor as emailextractor
 
@@ -50,6 +58,7 @@ def scrape():
         # Single parameter must be the location of the HTML StrictlyVC email...
         # Has to work with Google Chrome URL path...
         #... returns one list with dictionary objects for each company info block
+
         strictly_vc_data = strictlyvc.scrape(
             newslet_scrape_path +
             f'{newsletter}.html')
