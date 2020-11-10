@@ -15,6 +15,7 @@ flanker = "*"
 schedule = "*"
 python-dotenv = "*"
 webdriver-manager = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.7"

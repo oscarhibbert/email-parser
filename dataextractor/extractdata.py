@@ -5,6 +5,11 @@ from selenium.webdriver.common.keys import Keys
 import time
 import json
 
+# Import & load config
+import conf
+xpath = conf.xpath_locator['section_location']
+airtable_record_model = conf.airtable_record_model
+
 
 # Chrome webdriver SSL disabling options
 options = webdriver.ChromeOptions()
@@ -26,26 +31,27 @@ def get_data():
 
     data = []
     
-    data_chunks = browser.find_elements_by_xpath(
-        '//tbody//*[text()[contains(.,"Massive Fundings")]]/ancestor::tbody[1]//span[@*="font-family:verdana,geneva,sans-serif"] | //tbody//*[text()[contains(.,"Massive Fundings")]]/ancestor::tbody[1]//span[@*="font-family:verdana,geneva,sans-serif;"]')
+    data_chunks = browser.find_elements_by_xpath(xpath)
     # print(data_chunks)
     for iteration, data_chunk in enumerate(data_chunks):
 
-        print("Processing company " + data_chunk.text.split(',')[0] + ". Data chunk " + str(iteration+1) + "...")
+        print("Processing email section", str(iteration+1) + ". Title:",
+              data_chunk.text.split(',')[0] + "...")
         codata = {
-            'Startup Name': "",
-            'Startup Notes': "",
-            'Article URL': "",
-            'Scrape Status': "Scraped & Waiting"
+            airtable_record_model['field_section_title']: "",
+            airtable_record_model['field_section_text']: "",
+            airtable_record_model['field_section_link']: "",
+            airtable_record_model['field_status']: "Parsed from Email"
         }
         
-        codata["Startup Name"] = data_chunk.text.split(',')[0]
-        codata["Startup Notes"] = data_chunk.text
+        codata[airtable_record_model['field_section_title']
+               ] = conf.extract_section_title(data_chunk.text)
+        codata[airtable_record_model['field_section_text']] = data_chunk.text
 
             # time.sleep(3)
         chunk_links = data_chunk.find_elements_by_xpath('descendant::a')
         if not chunk_links:
-            print("No link(s) found")
+            print("No href link found")
             data.append(codata)
             print(codata)
             continue
@@ -56,11 +62,14 @@ def get_data():
                 browser.switch_to.window(browser.window_handles[1])
                 browser.get(thehref)
                 time.sleep(1)
+                # Logic for handling Techcrunch cookie redirect
                 if "consent.yahoo.com" in browser.current_url:
                     browser.find_element_by_xpath('//button[@name="agree"]').click()
-                    codata["Article URL"] = browser.current_url
+                    codata[airtable_record_model['field_section_link']
+                           ] = browser.current_url
                 else:
-                    codata["Article URL"] = browser.current_url    
+                    codata[airtable_record_model['field_section_link']
+                           ] = browser.current_url
                 browser.close()
                 browser.switch_to.window(browser.window_handles[0])
         data.append(codata)

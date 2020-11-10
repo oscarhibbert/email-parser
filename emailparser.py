@@ -39,11 +39,11 @@ import time
 
 def scrape():
 
-    # Print to console to signify scrape script started
-    print("Scraping script running now...")
+    # Print to console to signify email parser started
+    print("Email parser running now...")
 
     # Get the latest unseen mail. Returns the filename as a string
-    print("Checking for new StrictlyVC emails...")
+    print("Checking for latest unread email under specified label...")
     newsletter = emailextractor.getunseen(gmail_user,gmail_pw,imap_server,
         imap_label)
 
@@ -52,18 +52,18 @@ def scrape():
         return
     else:
 
-        # Import StrictlyVC newsletter scraping module
-        import scrape_scripts.scrape_strictlyvc as strictlyvc
+        # Import data extractor module
+        import dataextractor.extractdata as extractdata
 
-        # Single parameter must be the location of the HTML StrictlyVC email...
-        # Has to work with Google Chrome URL path...
+        # Single parameter must be absolute path to the 'newsletters' directory...
+        # Has be absolute to work with Google Chrome URL path...
         #... returns one list with dictionary objects for each company info block
 
-        strictly_vc_data = strictlyvc.scrape(
+        strictly_vc_data = extractdata.scrape(
             newslet_scrape_path +
             f'{newsletter}.html')
 
-        # # # Add records to Airtable table "Startups"
+        # # # Add records to Airtable table specified in config
         airtable_startups.add_records(airtable_apikey,
         airtable_base,airtable_table,strictly_vc_data)
 scrape()
