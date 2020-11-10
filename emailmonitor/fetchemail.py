@@ -20,7 +20,7 @@ def getunseen(emailuser,emailpw,imapserver,imaplabel):
     try:
         M.login(emailuser, emailpw)
     except imaplib.IMAP4.error:
-        print ("LOGIN FAILURE")
+        print ("\nLOGIN FAILURE\n")
 
     # 3. If the login is successful, we can now do IMAPy things with our IMAP4 object. 
     # Most methods of IMAP4 return a tuple where the first element is the 
@@ -33,7 +33,7 @@ def getunseen(emailuser,emailpw,imapserver,imaplabel):
     # (rv is status (index 0) and mailboxes (index1))
     rv, mailboxes = M.list()
     if rv == 'OK':
-        print ("Mailboxes:")
+        print ("\nMailboxes:\n")
         print (mailboxes)
 
     # 5. So with the mailbox selected, we can now get the emails within it. 
@@ -42,19 +42,19 @@ def getunseen(emailuser,emailpw,imapserver,imaplabel):
     def process_mailbox(M):
         rv, data = M.search(None, "UNSEEN")
         if rv != 'OK':
-            print("No messages found!")
+            print("\nNo messages found!\n")
             return
 
         for num in data[0].split():
             rv, data = M.fetch(num, '(RFC822)')
             if rv != 'OK':
-                print ("ERROR getting message"), num
+                print ("\nERROR getting message\n"), num
                 return
             rawemail = data[0][1]
             #   stremail = rawemail.decode('utf-8')
             email = mime.from_string((rawemail))
             for part in email.parts:
-                print('Content-Type: {} Body: {}'.format(part, part.body))
+                print('\nContent-Type: {} Body: {}\n'.format(part, part.body))
             filename = email.clean_subject.replace(" ", "").replace("?","question")
             f=open(f"./tempdata/{filename}.html",'w',encoding='utf-8')
             f.write(str(email.parts[1].body))
@@ -63,7 +63,7 @@ def getunseen(emailuser,emailpw,imapserver,imaplabel):
     # 4. To open one of the mailboxes/labels, call select():
     rv, data = M.select(imaplabel)
     if rv == 'OK':
-        print ("Processing mailbox...\n")
+        print ("\nProcessing mailbox...\n")
         return process_mailbox(M) # ... do something with emails, see code above ...
     M.close()
     M.logout()

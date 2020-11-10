@@ -31,15 +31,15 @@ import airtableapi.getdata as airtable_getdata
 def scrape():
 
     # Print to console to signify email parser started
-    print("Email parser running now...")
+    print("\nEmail parser running now...\n")
 
     # Get the latest unseen email. Returns the filename as a string
-    print("Checking for latest unread email under specified label...")
+    print("\nChecking for latest unread email under specified label...\n")
     email_htmlversion = fetchemail.getunseen(gmail_user, gmail_pw, imap_server,
         imap_label)
 
     if not email_htmlversion:
-        print("No email detected - terminating until next run...")
+        print("\nNo email detected - terminating until next run...\n")
         return
     else:
 
@@ -59,7 +59,8 @@ def scrape():
         filepath = './tempdata/' + f'{email_htmlversion}.html'
         try:
             os.remove(filepath)
-            print('HTML email file deleted sucessfully.')
+            print("\nHTML email file deleted from the 'tempdata' directory", 
+            "sucessfully.\n")
         except OSError as e:
             print("Error: %s : %s" % (filepath, e.strerror))
         

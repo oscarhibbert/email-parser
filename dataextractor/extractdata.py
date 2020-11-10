@@ -35,8 +35,8 @@ def get_data():
     # print(data_chunks)
     for iteration, data_chunk in enumerate(data_chunks):
 
-        print("Processing email section", str(iteration+1) + ". Title:",
-              data_chunk.text.split(',')[0] + "...")
+        print("\nProcessing email section", str(iteration+1) + ". Title:",
+              data_chunk.text.split(',')[0] + "...\n")
         codata = {
             airtable_record_model['field_section_title']: "",
             airtable_record_model['field_section_text']: "",
@@ -51,7 +51,7 @@ def get_data():
             # time.sleep(3)
         chunk_links = data_chunk.find_elements_by_xpath('descendant::a')
         if not chunk_links:
-            print("No href link found")
+            print("\nNo href link found\n")
             data.append(codata)
             print(codata)
             continue
