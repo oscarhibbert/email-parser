@@ -48,15 +48,24 @@ def scrape():
         # Import os for finding tempdata absolute path
         import os
         
-        # This function extracts data from HTML version of the email. 
+        # The following code extracts data from HTML version of the email. 
         # Path must be absolute as Google Chrome can only accept an 
         # absolute path to the file to load it.
         tempdata_abspath = os.path.abspath('./tempdata').replace(" ", "%20")
         extracted_data = extractdata.scrape(
-            'file:///' + tempdata_abspath + '/' + f'{email_htmlversion}.html')
+            'file:///' + tempdata_abspath + '/' + f'{email_htmlversion}.html')    
 
-        # This function takes the returned data from extraction & pushes it
+        # This code deletes the email HTML file from the tempdata directory
+        filepath = './tempdata/' + f'{email_htmlversion}.html'
+        try:
+            os.remove(filepath)
+            print('HTML email file deleted sucessfully.')
+        except OSError as e:
+            print("Error: %s : %s" % (filepath, e.strerror))
+        
+        # This code takes the returned data from extraction & pushes it
         # to Airtable as configured in config.py
         airtable_getdata.add_records(airtable_apikey,
         airtable_base,airtable_table,extracted_data)
+
 scrape()

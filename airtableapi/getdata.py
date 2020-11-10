@@ -8,4 +8,4 @@ def add_records(apikey,base,table,inputlisthere):
 
     print("Pushing records to Airtable. Batches of 5 records per second...")
     airtable.batch_insert(inputlisthere, typecast=False)
-    print("✅ Records pushed successfully!")
+    print("✅ Records pushed to Airtable successfully!")
