@@ -24,7 +24,7 @@ options.add_argument('--ignore-certificate-errors')
 browser = webdriver.Chrome(ChromeDriverManager().install())
 
 
-def newsletter_url(urlinput):
+def email_url(urlinput):
     browser.get(urlinput)
 
 def get_data():
@@ -79,5 +79,5 @@ def get_data():
     return data
 
 def scrape(input_url_here):
-    newsletter_url(input_url_here)
+    email_url(input_url_here)
     return get_data()

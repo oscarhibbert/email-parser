@@ -27,12 +27,12 @@ if newslet_scrape_path[-1] != '/':
     raise Exception("The '/' character is missing from the end of the " +
                     "scraping path. Please update it in your env. file.")
 
-# Import mailmonitor module
-import emailmonitor.emailmonitor as emailextractor
+# Import email monitor module
+import emailmonitor.fetchemail as fetchemail
 
 
-# Import Airtable API actions for table "Startups"
-import airtableapi.airtableapi_startups as airtable_startups
+# Import Airtable API actions for Airtable table
+import airtableapi.getdata as airtable_getdata
 
 import schedule
 import time
@@ -42,12 +42,12 @@ def scrape():
     # Print to console to signify email parser started
     print("Email parser running now...")
 
-    # Get the latest unseen mail. Returns the filename as a string
+    # Get the latest unseen email. Returns the filename as a string
     print("Checking for latest unread email under specified label...")
-    newsletter = emailextractor.getunseen(gmail_user,gmail_pw,imap_server,
+    email_htmlversion = fetchemail.getunseen(gmail_user, gmail_pw, imap_server,
         imap_label)
 
-    if not newsletter:
+    if not email_htmlversion:
         print("No email detected - terminating until next run...")
         return
     else:
@@ -55,20 +55,15 @@ def scrape():
         # Import data extractor module
         import dataextractor.extractdata as extractdata
 
-        # Single parameter must be absolute path to the 'newsletters' directory...
+        # Single parameter must be absolute path to the 'tempdata' directory...
         # Has be absolute to work with Google Chrome URL path...
         #... returns one list with dictionary objects for each company info block
 
-        strictly_vc_data = extractdata.scrape(
-            newslet_scrape_path +
-            f'{newsletter}.html')
+        extracted_data = extractdata.scrape(
+            'file:///Users/oscar/Dev%20Projects/scraping-app/tempdata/' +
+            f'{email_htmlversion}.html')
 
-        # # # Add records to Airtable table specified in config
-        airtable_startups.add_records(airtable_apikey,
-        airtable_base,airtable_table,strictly_vc_data)
+        # # # Push records to Airtable table specified in config
+        airtable_getdata.add_records(airtable_apikey,
+        airtable_base,airtable_table,extracted_data)
 scrape()
-# schedule.every(30).minutes.do(scrape)
-
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)

@@ -56,7 +56,7 @@ def getunseen(emailuser,emailpw,imapserver,imaplabel):
             for part in email.parts:
                 print('Content-Type: {} Body: {}'.format(part, part.body))
             filename = email.clean_subject.replace(" ", "").replace("?","question")
-            f=open(f"./newsletters/{filename}.html",'w',encoding='utf-8')
+            f=open(f"./tempdata/{filename}.html",'w',encoding='utf-8')
             f.write(str(email.parts[1].body))
             return filename
 
