@@ -10,11 +10,11 @@ import json
 options = webdriver.ChromeOptions()
 options.add_argument('--ignore-ssl-errors=yes')
 options.add_argument('--ignore-certificate-errors')
-# options.add_argument("user-data-dir=./chrome/ozzycookies")
 # options.add_argument('--headless')
 # options.add_argument('--disable-gpu')
 
-# Browser variable setting the browser driver and utilising options as above. * Note the path needs to be modified depending where
+# Browser variable setting the browser driver and utilising options as above. 
+# * Note the path needs to be modified depending where
 # ...this script is run from
 browser = webdriver.Chrome(ChromeDriverManager().install())
 

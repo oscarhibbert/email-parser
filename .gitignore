@@ -1,4 +1,4 @@
 *.env
 *.vscode
-practice_materials/
+tests/
 __pycache__/
