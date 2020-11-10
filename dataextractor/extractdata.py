@@ -6,9 +6,9 @@ import time
 import json
 
 # Import & load config
-import conf
-xpath = conf.xpath_locator['section_location']
-airtable_record_model = conf.airtable_record_model
+import config
+xpath = config.xpath_locator['section_location']
+airtable_record_model = config.airtable_record_model
 
 
 # Chrome webdriver SSL disabling options
@@ -45,7 +45,7 @@ def get_data():
         }
         
         codata[airtable_record_model['field_section_title']
-               ] = conf.extract_section_title(data_chunk.text)
+               ] = config.extract_section_title(data_chunk.text)
         codata[airtable_record_model['field_section_text']] = data_chunk.text
 
             # time.sleep(3)

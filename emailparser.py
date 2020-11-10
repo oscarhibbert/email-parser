@@ -19,13 +19,6 @@ imap_label = os.environ.get('IMAP_LABEL')
 
 newslet_scrape_path = os.environ.get('NEWSLET_SCRAPE_PATH')
 
-if not 'file:///' in newslet_scrape_path:
-    raise Exception("'file:///' is missing from the start of the " +
-                    "scraping path. Please update it in your env. file.")
-
-if newslet_scrape_path[-1] != '/':
-    raise Exception("The '/' character is missing from the end of the " +
-                    "scraping path. Please update it in your env. file.")
 
 # Import email monitor module
 import emailmonitor.fetchemail as fetchemail
@@ -34,8 +27,6 @@ import emailmonitor.fetchemail as fetchemail
 # Import Airtable API actions for Airtable table
 import airtableapi.getdata as airtable_getdata
 
-import schedule
-import time
 
 def scrape():
 
@@ -54,16 +45,18 @@ def scrape():
 
         # Import data extractor module
         import dataextractor.extractdata as extractdata
-
-        # Single parameter must be absolute path to the 'tempdata' directory...
-        # Has be absolute to work with Google Chrome URL path...
-        #... returns one list with dictionary objects for each company info block
-
+        # Import os for finding tempdata absolute path
+        import os
+        
+        # This function extracts data from HTML version of the email. 
+        # Path must be absolute as Google Chrome can only accept an 
+        # absolute path to the file to load it.
+        tempdata_abspath = os.path.abspath('./tempdata').replace(" ", "%20")
         extracted_data = extractdata.scrape(
-            'file:///Users/oscar/Dev%20Projects/scraping-app/tempdata/' +
-            f'{email_htmlversion}.html')
+            'file:///' + tempdata_abspath + '/' + f'{email_htmlversion}.html')
 
-        # # # Push records to Airtable table specified in config
+        # This function takes the returned data from extraction & pushes it
+        # to Airtable as configured in config.py
         airtable_getdata.add_records(airtable_apikey,
         airtable_base,airtable_table,extracted_data)
 scrape()
