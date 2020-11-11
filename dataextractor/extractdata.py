@@ -75,7 +75,6 @@ def get_data():
         data.append(codata)
         print(codata)
     browser.quit()
-    print(data)
     return data
 
 def scrape(input_url_here):

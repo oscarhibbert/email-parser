@@ -17,15 +17,13 @@ gmail_pw = os.environ.get('GMAIL_PW')
 imap_server = os.environ.get('IMAP_SERVER')
 imap_label = os.environ.get('IMAP_LABEL')
 
-newslet_scrape_path = os.environ.get('NEWSLET_SCRAPE_PATH')
-
 
 # Import email monitor module
 import emailmonitor.fetchemail as fetchemail
 
 
 # Import Airtable API actions for Airtable table
-import airtableapi.getdata as airtable_getdata
+import airtableapi.writedata as airtable_writedata
 
 
 def scrape():
@@ -66,7 +64,7 @@ def scrape():
         
         # This code takes the returned data from extraction & pushes it
         # to Airtable as configured in config.py
-        airtable_getdata.add_records(airtable_apikey,
+        airtable_writedata.add_records(airtable_apikey,
         airtable_base,airtable_table,extracted_data)
 
 scrape()

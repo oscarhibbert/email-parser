@@ -52,9 +52,11 @@ def getunseen(emailuser,emailpw,imapserver,imaplabel):
                 return
             rawemail = data[0][1]
             #   stremail = rawemail.decode('utf-8')
+            print('\nDecoding MIME email message & saving HTML file into',
+                'tempdata directory...\n')
             email = mime.from_string((rawemail))
-            for part in email.parts:
-                print('\nContent-Type: {} Body: {}\n'.format(part, part.body))
+            # for part in email.parts:
+            #     print('\nContent-Type: {} Body: {}\n'.format(part, part.body))
             filename = email.clean_subject.replace(" ", "").replace("?","question")
             f=open(f"./tempdata/{filename}.html",'w',encoding='utf-8')
             f.write(str(email.parts[1].body))
@@ -63,7 +65,7 @@ def getunseen(emailuser,emailpw,imapserver,imaplabel):
     # 4. To open one of the mailboxes/labels, call select():
     rv, data = M.select(imaplabel)
     if rv == 'OK':
-        print ("\nProcessing mailbox...\n")
+        print ("\nProcessing mailbox, fetching email...\n")
         return process_mailbox(M) # ... do something with emails, see code above ...
     M.close()
     M.logout()
