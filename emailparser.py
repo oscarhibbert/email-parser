@@ -12,8 +12,8 @@ airtable_apikey = os.environ.get('AIRTABLE_APIKEY')
 airtable_base = os.environ.get('AIRTABLE_BASE')
 airtable_table = os.environ.get('AIRTABLE_TABLE')
 
-gmail_user = os.environ.get('GMAIL_USER')
-gmail_pw = os.environ.get('GMAIL_PW')
+email_user = os.environ.get('EMAIL_USER')
+email_pw = os.environ.get('EMAIL_PW')
 imap_server = os.environ.get('IMAP_SERVER')
 imap_label = os.environ.get('IMAP_LABEL')
 
@@ -33,8 +33,7 @@ def scrape():
 
     # Get the latest unseen email. Returns the filename as a string
     print("\nChecking for latest unread email under specified label...\n")
-    email_htmlversion = fetchemail.getunseen(gmail_user, gmail_pw, imap_server,
-        imap_label)
+    email_htmlversion = fetchemail.getunseen(email_user, email_pw, imap_server, imap_label)
 
     if not email_htmlversion:
         print("\nNo email detected - terminating until next run...\n")

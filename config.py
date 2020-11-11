@@ -4,13 +4,14 @@ xpath_locator = {
 } 
 
 
-# Customise this function to point to where to extract each "section" title
+# Customise this function to point to where to fetch each "section" title
 def extract_section_title(section):
     title = section.split(',')[0]
     return title
 
 
-# The name of each Airtable field you have used
+# The name of each Airtable field you have used. Note this is limited to
+# fields below (Title, Text, Link & Status):
 airtable_record_model = {
     # Title of email section e.g. "Startup Name"
     'field_section_title': "Startup Name",
