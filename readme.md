@@ -2,7 +2,7 @@
 
 A python application that decodes & extracts MIME raw email messages via IMAP into cleanly formatted Airtable records which include separate data points.
 
-![Email Parser in action](https://p20.f4.n0.cdn.getcloudapp.com/items/llu2KNEY/Screen%20Recording%202020-11-11%20at%2012.35%20am.gif)
+![Email Parser in action](https://images.squarespace-cdn.com/content/v1/5f68900ab0847f6b53d3b288/1605056165374-178PDTE0PK5Y4TKGVIQ1/ke17ZwdGBToddI8pDm48kNvT88LknE-K9M4pGNO0Iqd7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1USOFn4xF8vTWDNAUBm5ducQhX-V3oVjSmr829Rco4W2Uo49ZdOtO_QXox0_W7i2zEA/email-parser.jpg)
 
 ## Installation
 
