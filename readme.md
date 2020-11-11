@@ -19,7 +19,7 @@ This application is tested with Python 3.7.
 
 1. Create a free Airtable account [here](https://airtable.com/signup).
 
-2. Create a new Airtable base, table & view. See [here](https://support.airtable.com/hc/en-us/articles/360021518753-Getting-started-starting-with-the-base-ics).
+2. Create a new Airtable base & table. See [here](https://support.airtable.com/hc/en-us/articles/360021518753-Getting-started-starting-with-the-base-ics).
 
 3. Add your Airtable fields in ```config.py```. **This is limited to the fields given in ```config.py```**
 
@@ -47,7 +47,11 @@ AIRTABLE_TABLE = ''
 
 ## Running the Application
 
-From the app directory ```$ pipenv run python3 emailparser.py```
+* From the application directory ```$ pipenv run python3 emailparser.py```.
+
+* Latest unread email under specified label will begin extracting as per config.py.
+
+* Data will be written to Airtable records.
 
 
 ## Limitations
