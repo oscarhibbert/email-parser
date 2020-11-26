@@ -64,9 +64,12 @@ def get_data():
                 time.sleep(1)
                 # Logic for handling Techcrunch cookie redirect
                 if "consent.yahoo.com" in browser.current_url:
-                    browser.find_element_by_xpath('//button[@name="agree"]').click()
-                    codata[airtable_record_model['field_section_link']
+                    try:
+                        browser.find_element_by_xpath('//button[@name="agree"]').click()
+                        codata[airtable_record_model['field_section_link']
                            ] = browser.current_url
+                    except:
+                        print('An exception occurred. See log.')       
                 else:
                     codata[airtable_record_model['field_section_link']
                            ] = browser.current_url
